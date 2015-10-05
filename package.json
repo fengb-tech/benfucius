@@ -1,0 +1,23 @@
+{
+  "name": "benfucius",
+  "version": "0.0.1",
+  "description": "wise man",
+  "author": "Benjamin Feng <contact@fengb.info>",
+  "homepage": "http://benfuci.us",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fengb-tech/benfucius.git"
+  },
+  "keywords": [
+    "benfucius",
+    "wise"
+  ],
+  "bugs": {
+    "url": "https://github.com/fengb-tech/benfucius/issues"
+  }
+}
