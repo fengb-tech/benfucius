@@ -1,5 +1,4 @@
 process.env.NODE_ENV = 'test'
-require('../../init')
 
 const chai = require('chai')
                .use(require('dirty-chai'))
