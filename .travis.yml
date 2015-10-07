@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - 'stable'
+  - '4.0'
+
+before_script:
+  - 'psql -U postgres -c "create database benfucius_test;"'
+
+env:
+  - 'NODE_ENV=travis'
