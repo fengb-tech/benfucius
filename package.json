@@ -32,5 +32,8 @@
     "lodash": "^3.10.1",
     "pg": "^4.4.2",
     "redis": "^2.1.0"
+  },
+  "devDependencies": {
+    "dirty-chai": "^1.2.2"
   }
 }

@@ -3,7 +3,7 @@ module.exports = {
     return Promise.spawn(function * () {
       yield knex.schema.createTable('quotes', function(table) {
         table.increments('id')
-        table.string('quote')
+        table.string('text')
       })
     })
   },
