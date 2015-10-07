@@ -34,6 +34,9 @@
     "redis": "^2.1.0"
   },
   "devDependencies": {
-    "dirty-chai": "^1.2.2"
+    "chai": "^3.3.0",
+    "dirty-chai": "^1.2.2",
+    "knex-cleaner": "^1.1.1",
+    "mocha": "^2.3.3"
   }
 }

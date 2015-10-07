@@ -1,6 +1,8 @@
-const { expect, request, app, Promise } = require('./support')
+const { expect, request, app, Promise, db } = require('./support')
 
 describe('func/quotes', () => {
+  db.sync()
+
   it('creates a quote', Promise.coroutine(function * () {
     let res = yield request(app)
       .post('/quotes')

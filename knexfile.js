@@ -7,6 +7,11 @@ var knexfile = module.exports = {
     connection: 'postgres://rails:@localhost/benfucius_dev',
   },
 
+  test: {
+    client: 'postgresql',
+    connection: 'postgres://rails:@localhost/benfucius_test',
+  },
+
   staging: {
     client: 'postgresql',
     connection: {
