@@ -1,6 +1,6 @@
 require('./init')
 
-var server = require('lib')
+var server = require('lib/app')
 
 var port = Number(process.env.PORT || 5000)
 
