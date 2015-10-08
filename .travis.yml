@@ -7,4 +7,5 @@ before_script:
   - 'psql -U postgres -c "create database benfucius_test;"'
 
 env:
-  - 'NODE_ENV=travis'
+  globals:
+    - 'BENFUCIUS_DB=postgres://postgres:@localhost/benfucius_test'
