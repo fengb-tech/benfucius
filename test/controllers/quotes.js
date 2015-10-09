@@ -1,4 +1,4 @@
-const { expect, request, app, Promise, db } = require('./support')
+const { expect, request, app, Promise, db } = require('test/support')
 const Quote = require('lib/models/quote')
 
 describe('func/quotes', () => {
@@ -6,7 +6,7 @@ describe('func/quotes', () => {
 
   describe('POST', () => {
     it('creates a quote', Promise.coroutine(function * () {
-      let res = yield request(app)
+      let res = yield request(app())
         .post('/quotes')
         .send({ text: 'This is the beginning of the end' })
         .expect(200)
@@ -23,7 +23,7 @@ describe('func/quotes', () => {
       let quote = new Quote({ text: 'I am the walrus' })
       yield quote.save()
 
-      yield request(app)
+      yield request(app())
         .get(`/quotes/${quote.get('id')}`)
         .expect(200, quote.toJSON())
     }))
