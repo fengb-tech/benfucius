@@ -1,6 +1,6 @@
 module.exports = {
   up (knex, Promise) {
-    return knex.schema.createTable('quotes', function(table) {
+    return knex.schema.createTable('quotes', function (table) {
       table.increments('id')
       table.string('text')
     })

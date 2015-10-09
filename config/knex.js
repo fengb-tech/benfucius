@@ -5,6 +5,6 @@ module.exports = {
   connection: process.env.BENFUCIUS_DB,
   pool: {
     min: 2,
-    max: 10
+    max: 10,
   },
 }
