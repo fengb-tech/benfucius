@@ -1,4 +1,4 @@
-const { expect, _, db, co } = require('test/support')
+const { expect, _, db, Promise } = require('test/support')
 const Quote = require('lib/models/quote')
 
 describe('Quote', () => {
@@ -17,13 +17,13 @@ describe('Quote', () => {
   describe('.randomOffset', () => {
     db.sync()
 
-    beforeEach(co.wrap(function * () {
+    beforeEach(Promise.coroutine(function * () {
       let quotes = _.times(10, () => new Quote())
-      yield _.map(quotes, (q) => q.save())
+      yield * _.map(quotes, (q) => q.save())
     }))
 
-    it('returns random quotes', co.wrap(function * () {
-      let quotes = yield _.times(3, () => Quote.randomOffset().fetch())
+    it('returns random quotes', Promise.coroutine(function * () {
+      let quotes = yield * _.times(3, () => Quote.randomOffset().fetch())
       let uniqQuoteIds = _(quotes)
                            .map((q) => q.get('id'))
                            .uniq()

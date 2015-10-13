@@ -7,7 +7,6 @@ const chai = require('chai')
 module.exports = {
   expect: chai.expect,
   _: _,
-  co: require('co'),
   Promise: require('bluebird'),
   db: require('./db'),
   request: require('supertest'),
