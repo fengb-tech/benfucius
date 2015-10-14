@@ -14,7 +14,7 @@ describe('Quote', () => {
     })
   })
 
-  describe('.randomOffset', () => {
+  describe('.fetchRandom', () => {
     db.sync()
 
     beforeEach(Promise.coroutine(function * () {
@@ -23,7 +23,7 @@ describe('Quote', () => {
     }))
 
     it('returns random quotes', Promise.coroutine(function * () {
-      let quotes = yield * _.times(3, () => Quote.randomOffset().fetch())
+      let quotes = yield * _.times(3, () => Quote.fetchRandom())
       let uniqQuoteIds = _(quotes)
                            .map((q) => q.get('id'))
                            .uniq()
