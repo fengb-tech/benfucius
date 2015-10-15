@@ -4,4 +4,16 @@ block content
   h1 Benfucius says
   blockquote= quote.get('text')
 
+  form(method='POST' action="/quotes/#{quote.get('id')}/vote")
+    input(type='hidden' name='value' value='+')
+    button Wise
+
+  form(method='POST' action="/quotes/#{quote.get('id')}/vote")
+    input(type='hidden' name='value' value='-')
+    button Lies
+
+  form(method='POST' action="/quotes/#{quote.get('id')}/vote")
+    input(type='hidden' name='value' value='wtf')
+    button Fries
+
   a(href='/quotes/new') Submit a new quote
