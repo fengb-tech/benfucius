@@ -32,4 +32,19 @@ describe('Quote', () => {
       expect(uniqQuoteIds).to.not.have.length(1)
     }))
   })
+
+  describe('.kosher', () => {
+    db.sync()
+
+    beforeEach(Promise.coroutine(function * () {
+      let quote = new Quote()
+      this.quote = yield quote.save()
+    }))
+
+    it('is kosher by default', Promise.coroutine(function * () {
+      let quote = yield Quote.kosher().fetch()
+      expect(quote).to.not.be.null()
+      expect(quote.get('id')).to.equal(this.quote.get('id'))
+    }))
+  })
 })
