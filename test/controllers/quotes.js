@@ -25,7 +25,7 @@ describe('func/quotes', () => {
 
       yield request(app())
         .get(`/quotes/${quote.get('id')}`)
-        .expect(200, quote.toJSON())
+        .expect(200, { quote: quote.toJSON() })
     }))
   })
 })
