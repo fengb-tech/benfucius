@@ -1,22 +1,8 @@
-const { expect, request, app, Promise, db } = require('test/support')
+const { expect, request, app, Promise, db, resourceParse } = require('test/support')
 const Quote = require('lib/models/quote')
 
 describe('func/quotes', () => {
   db.sync()
-
-  describe('POST', () => {
-    it('creates a quote', Promise.coroutine(function * () {
-      let res = yield request(app())
-        .post('/quotes')
-        .send({ text: 'This is the beginning of the end' })
-        .expect(200)
-
-      expect(res.body.id).to.exist()
-
-      let quote = yield Quote.where({ id: res.body.id }).fetch()
-      expect(quote.get('text')).to.equal('This is the beginning of the end')
-    }))
-  })
 
   describe('GET :id', () => {
     it('gets a quote', Promise.coroutine(function * () {
@@ -26,6 +12,21 @@ describe('func/quotes', () => {
       yield request(app())
         .get(`/quotes/${quote.get('id')}`)
         .expect(200, { quote: quote.toJSON() })
+    }))
+  })
+
+  describe('POST', () => {
+    it('creates a quote', Promise.coroutine(function * () {
+      let res = yield request(app())
+        .post('/quotes')
+        .send({ text: 'This is the beginning of the end' })
+        .expect(302)
+
+      let { id } = resourceParse(res.headers.location)
+      expect(id).to.exist()
+
+      let quote = yield Quote.where({ id }).fetch()
+      expect(quote.get('text')).to.equal('This is the beginning of the end')
     }))
   })
 })
