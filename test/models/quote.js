@@ -33,6 +33,31 @@ describe('Quote', () => {
     }))
   })
 
+  describe('.withVotes', () => {
+    db.sync()
+
+    beforeEach(Promise.coroutine(function * () {
+      let quote = new Quote()
+      this.quote = yield quote.save()
+    }))
+
+    describe('#get("positive_votes")', () => {
+      it('= null by default', Promise.coroutine(function * () {
+        let quote = yield Quote.withVotes().fetch()
+        expect(quote.get('positive_votes')).to.be.null()
+      }))
+
+      it('= 0.5 with votes', Promise.coroutine(function * () {
+        let votes = this.quote.related('votes')
+        this.plusVote = yield votes.create({ value: '+' })
+        this.minusVote = yield votes.create({ value: '-' })
+
+        let quote = yield Quote.withVotes().fetch()
+        expect(quote.get('positive_votes')).to.eq(0.5)
+      }))
+    })
+  })
+
   describe('.kosher', () => {
     db.sync()
 
