@@ -46,5 +46,28 @@ describe('Quote', () => {
       expect(quote).to.not.be.null()
       expect(quote.get('id')).to.equal(this.quote.get('id'))
     }))
+
+    describe('with 50% "wtf" vote', function () {
+      beforeEach(Promise.coroutine(function * () {
+        let votes = this.quote.related('votes')
+        this.plusVote = yield votes.create({ value: '+' })
+        this.wtfVote = yield votes.create({ value: 'wtf' })
+      }))
+
+      it('is not kosher if over minCount and under threshold', Promise.coroutine(function * () {
+        let quote = yield Quote.kosher({ minCount: 2, threshold: 1 }).fetch()
+        expect(quote).to.be.null()
+      }))
+
+      it('is kosher if under minCount', Promise.coroutine(function * () {
+        let quote = yield Quote.kosher({ minCount: 3, threshold: 1 }).fetch()
+        expect(quote).to.not.be.null()
+      }))
+
+      it('is kosher if over threshold', Promise.coroutine(function * () {
+        let quote = yield Quote.kosher({ minCount: 2, threshold: 0.4 }).fetch()
+        expect(quote).to.not.be.null()
+      }))
+    })
   })
 })
