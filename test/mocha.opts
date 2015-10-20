@@ -1,3 +1,4 @@
 --require env-test
+--require co-mocha
 --require init.js
 --recursive

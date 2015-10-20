@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "chai": "^3.3.0",
+    "co-mocha": "^1.1.2",
     "dirty-chai": "^1.2.2",
     "env-test": "^1.0.0",
     "eslint": "^1.6.0",
