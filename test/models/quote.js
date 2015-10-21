@@ -2,19 +2,19 @@ const { expect, _, db } = require('test/support')
 const Quote = require('lib/models/quote')
 
 describe('Quote', () => {
-  describe('.asRandomSql', () => {
+  describe('#asRandomSql', () => {
     it('wraps values into random-sql snippet', () => {
-      expect(Quote.asRandomSql(1, 10))
+      expect(Quote.forge().asRandomSql(1, 10))
         .to.equal('(random() * ((10) - (1)) + (1))')
     })
 
     it('wraps strings into random-sql snippet', () => {
-      expect(Quote.asRandomSql(1, 'count(*)'))
+      expect(Quote.forge().asRandomSql(1, 'count(*)'))
         .to.equal('(random() * ((count(*)) - (1)) + (1))')
     })
   })
 
-  describe('.fetchRandom', () => {
+  describe('#fetchRandom', () => {
     db.sync()
 
     beforeEach(function * () {
@@ -23,7 +23,7 @@ describe('Quote', () => {
     })
 
     it('returns random quotes', function * () {
-      let quotes = yield * _.times(3, () => Quote.fetchRandom())
+      let quotes = yield * _.times(3, () => Quote.forge().fetchRandom())
       let uniqQuoteIds = _(quotes)
                            .map((q) => q.get('id'))
                            .uniq()
@@ -33,7 +33,7 @@ describe('Quote', () => {
     })
   })
 
-  describe('.withVotes', () => {
+  describe('#withVotes', () => {
     db.sync()
 
     beforeEach(function * () {
@@ -43,7 +43,7 @@ describe('Quote', () => {
 
     describe('#get("positive_votes")', () => {
       it('= null by default', function * () {
-        let quote = yield Quote.withVotes().fetch()
+        let quote = yield Quote.forge().withVotes().fetch()
         expect(quote.get('positive_votes')).to.be.null()
       })
 
@@ -52,13 +52,13 @@ describe('Quote', () => {
         this.plusVote = yield votes.create({ value: '+' })
         this.minusVote = yield votes.create({ value: '-' })
 
-        let quote = yield Quote.withVotes().fetch()
+        let quote = yield Quote.forge().withVotes().fetch()
         expect(quote.get('positive_votes')).to.eq(0.5)
       })
     })
   })
 
-  describe('.kosher', () => {
+  describe('#kosher', () => {
     db.sync()
 
     beforeEach(function * () {
@@ -67,7 +67,7 @@ describe('Quote', () => {
     })
 
     it('is kosher by default', function * () {
-      let quote = yield Quote.kosher().fetch()
+      let quote = yield Quote.forge().kosher().fetch()
       expect(quote).to.not.be.null()
       expect(quote.get('id')).to.equal(this.quote.get('id'))
     })
@@ -80,17 +80,17 @@ describe('Quote', () => {
       })
 
       it('is not kosher if over minCount and under threshold', function * () {
-        let quote = yield Quote.kosher({ minCount: 2, threshold: 1 }).fetch()
+        let quote = yield Quote.forge().kosher({ minCount: 2, threshold: 1 }).fetch()
         expect(quote).to.be.null()
       })
 
       it('is kosher if under minCount', function * () {
-        let quote = yield Quote.kosher({ minCount: 3, threshold: 1 }).fetch()
+        let quote = yield Quote.forge().kosher({ minCount: 3, threshold: 1 }).fetch()
         expect(quote).to.not.be.null()
       })
 
       it('is kosher if over threshold', function * () {
-        let quote = yield Quote.kosher({ minCount: 2, threshold: 0.4 }).fetch()
+        let quote = yield Quote.forge().kosher({ minCount: 2, threshold: 0.4 }).fetch()
         expect(quote).to.not.be.null()
       })
     })
