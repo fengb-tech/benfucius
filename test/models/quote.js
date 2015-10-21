@@ -2,18 +2,6 @@ const { expect, _, db } = require('test/support')
 const Quote = require('lib/models/quote')
 
 describe('Quote', () => {
-  describe('#asRandomSql', () => {
-    it('wraps values into random-sql snippet', () => {
-      expect(Quote.forge().asRandomSql(1, 10))
-        .to.equal('(random() * ((10) - (1)) + (1))')
-    })
-
-    it('wraps strings into random-sql snippet', () => {
-      expect(Quote.forge().asRandomSql(1, 'count(*)'))
-        .to.equal('(random() * ((count(*)) - (1)) + (1))')
-    })
-  })
-
   describe('#fetchRandom', () => {
     db.sync()
 
