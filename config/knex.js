@@ -1,8 +1,8 @@
-require('./init')
+var env = require('./env')
 
 module.exports = {
   client: 'postgresql',
-  connection: process.env.BENFUCIUS_DB,
+  connection: env.BENFUCIUS_DB,
   pool: {
     min: 2,
     max: 10,

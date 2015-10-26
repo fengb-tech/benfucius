@@ -21,5 +21,3 @@ require('babel-core/register')({
   }
   require('module')._initPaths()
 })()
-
-require('config/init')
