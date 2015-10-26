@@ -30,9 +30,9 @@ describe('Quote', () => {
     })
 
     describe('#get("positive_votes")', () => {
-      it('= null by default', function * () {
+      it('= 0 by default', function * () {
         let quote = yield Quote.forge().withVotes().fetch()
-        expect(quote.get('positive_votes')).to.be.null()
+        expect(quote.get('positive_votes')).to.eq(0)
       })
 
       it('= 0.5 with votes', function * () {

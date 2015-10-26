@@ -11,7 +11,13 @@ describe('func/quotes', () => {
 
       yield request(app())
         .get(`/quotes/${quote.get('id')}`)
-        .expect(200, { quote: quote.toJSON() })
+        .expect(200, {
+          quote: {
+            id: quote.get('id'),
+            text: quote.get('text'),
+            positive_votes: 0,
+          },
+        })
     })
   })
 
