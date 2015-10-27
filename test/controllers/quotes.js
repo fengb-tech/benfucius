@@ -1,4 +1,4 @@
-const { expect, request, session, app, db, resourceParse } = require('test/support')
+const { expect, app, db, resourceParse } = require('test/support')
 const Quote = require('lib/models/quote')
 
 describe('func/quotes', () => {
@@ -9,7 +9,7 @@ describe('func/quotes', () => {
       let quote = new Quote({ text: 'I am the walrus' })
       yield quote.save()
 
-      yield request(app())
+      yield app.request()
         .get(`/quotes/${quote.get('id')}`)
         .expect(200, {
           quote: {
@@ -23,7 +23,7 @@ describe('func/quotes', () => {
 
   describe('POST', () => {
     it('creates a quote', function * () {
-      let res = yield request(app())
+      let res = yield app.request()
         .post('/quotes')
         .send({ text: 'This is the beginning of the end' })
         .expect(302)
@@ -43,7 +43,7 @@ describe('func/quotes', () => {
     })
 
     it('adds a vote to a quote', function * () {
-      yield request(app())
+      yield app.request()
         .post(`/quotes/${this.quote.get('id')}/vote`)
         .send({ value: '+' })
         .expect(302)
@@ -54,12 +54,12 @@ describe('func/quotes', () => {
     })
 
     it('updates existing vote for same session', function * () {
-      let testSession = session(app())
-      yield testSession
+      let session = app.session()
+      yield session
         .post(`/quotes/${this.quote.get('id')}/vote`)
         .send({ value: '+' })
 
-      yield testSession
+      yield session
         .post(`/quotes/${this.quote.get('id')}/vote`)
         .send({ value: '-' })
 
