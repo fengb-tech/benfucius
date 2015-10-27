@@ -10,6 +10,7 @@ module.exports = {
   Promise: require('bluebird'),
   db: require('./db'),
   request: require('supertest'),
+  session: require('supertest-session'),
   app: _.once(() => require('lib/app').callback()),
   resourceParse (path) {
     let [resource, id, action] = _(path).trim('/').split('/')
