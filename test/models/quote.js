@@ -35,13 +35,13 @@ describe('Quote', () => {
         expect(quote.get('positive_votes')).to.eq(0)
       })
 
-      it('= 0.5 with votes', function * () {
+      it('= 1 with votes', function * () {
         let votes = this.quote.related('votes')
         this.plusVote = yield votes.create({ value: '+' })
         this.minusVote = yield votes.create({ value: '-' })
 
         let quote = yield Quote.forge().withVotes().fetch()
-        expect(quote.get('positive_votes')).to.eq(0.5)
+        expect(quote.get('positive_votes')).to.eq(1)
       })
     })
   })
@@ -67,18 +67,18 @@ describe('Quote', () => {
         this.wtfVote = yield votes.create({ value: 'wtf' })
       })
 
-      it('is not kosher if over minCount and under threshold', function * () {
-        let quote = yield Quote.forge().kosher({ minCount: 2, threshold: 1 }).fetch()
+      it('is not kosher if over minCount and above threshold', function * () {
+        let quote = yield Quote.forge().kosher({ minCount: 1, threshold: 0 }).fetch()
         expect(quote).to.be.null()
       })
 
       it('is kosher if under minCount', function * () {
-        let quote = yield Quote.forge().kosher({ minCount: 3, threshold: 1 }).fetch()
+        let quote = yield Quote.forge().kosher({ minCount: 2, threshold: 0 }).fetch()
         expect(quote).to.not.be.null()
       })
 
-      it('is kosher if over threshold', function * () {
-        let quote = yield Quote.forge().kosher({ minCount: 2, threshold: 0.4 }).fetch()
+      it('is kosher if under threshold', function * () {
+        let quote = yield Quote.forge().kosher({ minCount: 1, threshold: 0.6 }).fetch()
         expect(quote).to.not.be.null()
       })
     })

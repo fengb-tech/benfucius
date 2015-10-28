@@ -16,6 +16,7 @@ describe('func/quotes', () => {
             id: quote.get('id'),
             text: quote.get('text'),
             positive_votes: 0,
+            negative_votes: 0,
           },
         })
     })
