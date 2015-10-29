@@ -12,6 +12,9 @@ module.exports = {
   get app () {
     return require('./app')
   },
+  get mocha () {
+    return require('./mocha')
+  },
   resourceParse (path) {
     let [resource, id, action] = _(path).trim('/').split('/')
     return { resource, id, action }

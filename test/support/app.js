@@ -1,12 +1,14 @@
 const supertest = require('supertest')
 const app = require('lib/app')
 
+let nodeServer = app.callback()
+
 module.exports = {
   request () {
-    return supertest(app.callback())
+    return supertest(nodeServer)
   },
 
   agent () {
-    return supertest.agent(app.callback())
+    return supertest.agent(nodeServer)
   },
 }

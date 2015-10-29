@@ -1,4 +1,4 @@
-const _ = require('lodash')
+const { _, mocha } = require('.')
 const knexCleaner = require('knex-cleaner')
 const Bookshelf = require('lib/models/bookshelf')
 
@@ -9,7 +9,7 @@ module.exports = {
   },
 
   migrate: _.once(() => {
-    before(() => Bookshelf.knex.migrate.latest())
+    mocha.beforeAll(() => Bookshelf.knex.migrate.latest())
   }),
 
   clean () {
