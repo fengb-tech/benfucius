@@ -55,12 +55,12 @@ describe('func/quotes', () => {
     })
 
     it('updates existing vote for same session', function * () {
-      let session = app.session()
-      yield session
+      let agent = app.agent()
+      yield agent
         .post(`/quotes/${this.quote.get('id')}/vote`)
         .send({ value: '+' })
 
-      yield session
+      yield agent
         .post(`/quotes/${this.quote.get('id')}/vote`)
         .send({ value: '-' })
 
