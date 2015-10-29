@@ -1,6 +1,12 @@
-const _ = require('lodash')
 const supertest = require('supertest')
+const app = require('lib/app')
 
-const app = module.exports = _.once(() => require('lib/app').callback())
-app.request = () => supertest(app())
-app.agent = () => supertest.agent(app())
+module.exports = {
+  request () {
+    return supertest(app.callback())
+  },
+
+  agent () {
+    return supertest.agent(app.callback())
+  },
+}
