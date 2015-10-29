@@ -29,20 +29,20 @@ describe('Quote', () => {
       this.quote = yield quote.save()
     })
 
-    describe('#get("positive_votes")', () => {
-      it('= 0 by default', function * () {
-        let quote = yield Quote.forge().withVotes().fetch()
-        expect(quote.get('positive_votes')).to.eq(0)
-      })
+    it('has nulls by default', function * () {
+      let quote = yield Quote.forge().withVotes().fetch()
+      expect(quote.get('positive_votes')).to.eq(null)
+      expect(quote.get('negative_votes')).to.eq(null)
+    })
 
-      it('= 1 with votes', function * () {
-        let votes = this.quote.related('votes')
-        this.plusVote = yield votes.create({ value: '+' })
-        this.minusVote = yield votes.create({ value: '-' })
+    it('counts up votes', function * () {
+      let votes = this.quote.related('votes')
+      this.plusVote = yield votes.create({ value: '+' })
+      this.minusVote = yield votes.create({ value: '-' })
 
-        let quote = yield Quote.forge().withVotes().fetch()
-        expect(quote.get('positive_votes')).to.eq(1)
-      })
+      let quote = yield Quote.forge().withVotes().fetch()
+      expect(quote.get('positive_votes')).to.eq(1)
+      expect(quote.get('negative_votes')).to.eq(1)
     })
   })
 
