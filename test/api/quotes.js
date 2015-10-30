@@ -1,4 +1,4 @@
-const { expect, app, db, resourceParse } = require('test/support')
+const { expect, app, db, factory, resourceParse } = require('test/support')
 const Quote = require('lib/models/quote')
 
 describe('API/quotes', () => {
@@ -21,8 +21,7 @@ describe('API/quotes', () => {
 
   describe('/:id', () => {
     beforeEach(function * () {
-      let quote = new Quote({ text: 'I am the walrus' })
-      this.quote = yield quote.save()
+      this.quote = yield factory.quote.create()
     })
 
     describe('#GET', () => {

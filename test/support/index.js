@@ -15,6 +15,9 @@ module.exports = {
   get mocha () {
     return require('./mocha')
   },
+  get factory () {
+    return require('./factory')
+  },
   resourceParse (path) {
     let [resource, id, action] = _(path).trim('/').split('/')
     return { resource, id, action }

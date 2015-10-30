@@ -25,6 +25,7 @@
     "babel-core": "^5.8.25",
     "bluebird": "^2.10.2",
     "bookshelf": "^0.8.2",
+    "checkit": "^0.6.0",
     "co-views": "^2.1.0",
     "dotenv": "^1.2.0",
     "jade": "^1.11.0",

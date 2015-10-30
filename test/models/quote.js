@@ -1,4 +1,4 @@
-const { expect, _, db } = require('test/support')
+const { expect, _, db, factory } = require('test/support')
 const Quote = require('lib/models/quote')
 
 describe('Quote', () => {
@@ -6,8 +6,7 @@ describe('Quote', () => {
     db.sync()
 
     beforeEach(function * () {
-      let quotes = _.times(10, () => new Quote())
-      yield * _.map(quotes, (q) => q.save())
+      this.quotes = yield _.times(10, () => factory.quote.create())
     })
 
     it('returns random quotes', function * () {
@@ -25,8 +24,7 @@ describe('Quote', () => {
     db.sync()
 
     beforeEach(function * () {
-      let quote = new Quote()
-      this.quote = yield quote.save()
+      this.quote = yield factory.quote.create()
     })
 
     it('has nulls by default', function * () {
@@ -36,9 +34,11 @@ describe('Quote', () => {
     })
 
     it('counts up votes', function * () {
-      let votes = this.quote.related('votes')
-      this.plusVote = yield votes.create({ value: '+' })
-      this.minusVote = yield votes.create({ value: '-' })
+      let quote_id = this.quote.get('id')
+      yield [
+        factory.vote.create({ quote_id, value: '+' }),
+        factory.vote.create({ quote_id, value: '-' }),
+      ]
 
       let quote = yield Quote.forge().withVotes().fetch()
       expect(quote.get('positive_votes')).to.eq(1)
@@ -50,8 +50,7 @@ describe('Quote', () => {
     db.sync()
 
     beforeEach(function * () {
-      let quote = new Quote()
-      this.quote = yield quote.save()
+      this.quote = yield factory.quote.create()
     })
 
     it('is kosher by default', function * () {
@@ -60,11 +59,13 @@ describe('Quote', () => {
       expect(quote.get('id')).to.equal(this.quote.get('id'))
     })
 
-    describe('with 50% "wtf" vote', function () {
+    describe('with 50% "!" vote', function () {
       beforeEach(function * () {
-        let votes = this.quote.related('votes')
-        this.plusVote = yield votes.create({ value: '+' })
-        this.wtfVote = yield votes.create({ value: 'wtf' })
+        let quote_id = this.quote.get('id')
+        this.votes = yield [
+          factory.vote.create({ quote_id, value: '+' }),
+          factory.vote.create({ quote_id, value: '!' }),
+        ]
       })
 
       it('is not kosher if over minCount and above threshold', function * () {
