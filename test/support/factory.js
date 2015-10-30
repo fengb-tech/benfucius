@@ -1,31 +1,43 @@
+const { _ } = require('.')
 const uuid = require('node-uuid')
+
 const Quote = require('lib/models/quote')
 const Vote = require('lib/models/vote')
 
-module.exports = {
-  quote: factoryize(Quote, (attrs = {}) => {
-    attrs.user_uuid = attrs.user_uuid || uuid.v4()
-    attrs.text = attrs.text || 'Narp'
-    return attrs
-  }),
+class Factory {
+  constructor (Model, defaults = {}) {
+    this.Model = Model
+    this.defaults = defaults
+  }
 
-  vote: factoryize(Vote, (attrs = {}) => {
-    attrs.user_uuid = attrs.user_uuid || uuid.v4()
-    attrs.value = attrs.value || '+'
+  attrs (attrs = {}) {
+    _.forOwn(this.defaults, (value, key) => {
+      if (!attrs.hasOwnProperty(key)) {
+        attrs[key] = _.isFunction(value) ? value() : value
+      }
+    })
+
     return attrs
-  }),
+  }
+
+  build (attrs = {}) {
+    attrs = this.attrs(attrs)
+    return new this.Model(attrs)
+  }
+
+  create (attrs = {}) {
+    return this.build(attrs).save()
+  }
 }
 
-function factoryize (Model, attrFn) {
-  return {
-    attrs: attrFn,
-    build (attrs) {
-      attrs = this.attrs(attrs)
-      return new Model(attrs)
-    },
-    create (attrs) {
-      attrs = this.attrs(attrs)
-      return new Model(attrs).save()
-    },
-  }
+module.exports = {
+  quote: new Factory(Quote, {
+    user_uuid: uuid.v4,
+    text: 'Narp',
+  }),
+
+  vote: new Factory(Vote, {
+    user_uuid: uuid.v4,
+    value: '+',
+  }),
 }
