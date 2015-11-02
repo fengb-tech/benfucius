@@ -1,2 +1,2 @@
 // Shim to appease knex cli
-module.exports = require('./config/knex')
+exports.development = exports.test = exports.production = require('./config/knex')
