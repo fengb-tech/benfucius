@@ -1,0 +1,30 @@
+blockquote {
+  margin: 0;
+}
+
+.quote {
+  margin: 30px;
+}
+
+.quote-text {
+  margin-bottom: 20px;
+  font-style: italic;
+  font-size: large;
+}
+
+.quote-text::before, .quote-text::after {
+  content: '"';
+}
+
+.vote {
+  display: inline-block;
+  width: 100px;
+}
+
+.vote.positive {
+  color: #00aa00;
+}
+
+.vote.negative {
+  color: #cc0000;
+}
