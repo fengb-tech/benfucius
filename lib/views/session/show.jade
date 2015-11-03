@@ -1,0 +1,8 @@
+extends ../layout.jade
+
+block content
+  form(method='POST')
+    div.g-recaptcha(data-sitekey=SITE_KEY)
+    button Submit
+
+  script(src='https://www.google.com/recaptcha/api.js' async defer)
