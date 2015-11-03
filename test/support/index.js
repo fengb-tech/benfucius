@@ -6,6 +6,7 @@ module.exports = {
   _: _,
   expect: chai.expect,
   Promise: require('bluebird'),
+  sinon: require('sinon'),
   get db () {
     return require('./db')
   },

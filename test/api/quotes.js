@@ -15,13 +15,15 @@ describe('API/quotes', () => {
     })
 
     it('creates a quote', function * () {
-      let agent = yield app.agent().withValidSession()
+      let agent = app.agent().withValidSession()
       let res = yield agent
         .post('/quotes')
         .send({ text: 'This is the beginning of the end' })
         .expect(302)
 
-      let { id } = resourceParse(res.headers.location)
+      let { resource, id, action } = resourceParse(res.headers.location)
+      expect(resource).to.equal('quotes')
+      expect(action).to.be.undefined()
       expect(id).to.exist()
 
       let quote = yield Quote.where({ id }).fetch()
@@ -60,7 +62,7 @@ describe('API/quotes', () => {
       })
 
       it('adds a vote to a quote', function * () {
-        let agent = yield app.agent().withValidSession()
+        let agent = app.agent().withValidSession()
         yield agent
           .post(`/quotes/${this.quote.get('id')}/vote`)
           .send({ value: '+' })
@@ -72,7 +74,7 @@ describe('API/quotes', () => {
       })
 
       it('updates existing vote for same session', function * () {
-        let agent = yield app.agent().withValidSession()
+        let agent = app.agent().withValidSession()
         yield agent
           .post(`/quotes/${this.quote.get('id')}/vote`)
           .send({ value: '+' })
