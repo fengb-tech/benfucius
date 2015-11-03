@@ -22,7 +22,7 @@ function * withValidSession () {
     return Promise.resolve({ data: { success: true } })
   })
 
-  let res = yield this
+  yield this
     .post('/session')
     .send({ 'g-recaptcha-response': 'success' })
     .expect(302)

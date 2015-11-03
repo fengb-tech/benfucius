@@ -5,6 +5,15 @@ describe('API/quotes', () => {
   db.sync()
 
   describe('#POST', () => {
+    it('redirects to session', function * () {
+      let res = yield app.request()
+        .post('/quotes')
+        .send({ text: 'This is the beginning of the end' })
+        .expect(302)
+
+      expect(res.headers.location).to.equal('/session')
+    })
+
     it('creates a quote', function * () {
       let agent = yield app.agent().withValidSession()
       let res = yield agent
@@ -41,6 +50,15 @@ describe('API/quotes', () => {
     })
 
     describe('/votes#POST', () => {
+      it('redirects to session', function * () {
+        let res = yield app.request()
+          .post(`/quotes/${this.quote.get('id')}/vote`)
+          .send({ value: '+' })
+          .expect(302)
+
+        expect(res.headers.location).to.equal('/session')
+      })
+
       it('adds a vote to a quote', function * () {
         let agent = yield app.agent().withValidSession()
         yield agent
