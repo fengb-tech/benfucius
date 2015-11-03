@@ -6,7 +6,8 @@ describe('API/quotes', () => {
 
   describe('#POST', () => {
     it('creates a quote', function * () {
-      let res = yield app.request()
+      let agent = yield app.agent().withValidSession()
+      let res = yield agent
         .post('/quotes')
         .send({ text: 'This is the beginning of the end' })
         .expect(302)
@@ -41,7 +42,8 @@ describe('API/quotes', () => {
 
     describe('/votes#POST', () => {
       it('adds a vote to a quote', function * () {
-        yield app.request()
+        let agent = yield app.agent().withValidSession()
+        yield agent
           .post(`/quotes/${this.quote.get('id')}/vote`)
           .send({ value: '+' })
           .expect(302)
@@ -52,7 +54,7 @@ describe('API/quotes', () => {
       })
 
       it('updates existing vote for same session', function * () {
-        let agent = app.agent()
+        let agent = yield app.agent().withValidSession()
         yield agent
           .post(`/quotes/${this.quote.get('id')}/vote`)
           .send({ value: '+' })
