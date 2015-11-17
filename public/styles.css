@@ -1,3 +1,7 @@
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'Droid Sans', OpenSans, Arial, sans-serif;
+}
+
 blockquote {
   margin: 0;
 }
@@ -19,6 +23,7 @@ blockquote {
 .vote {
   display: inline-block;
   width: 100px;
+  font-weight: bold;
 }
 
 .vote.positive {
@@ -27,4 +32,8 @@ blockquote {
 
 .vote.negative {
   color: #cc0000;
+}
+
+tr:nth-child(even) {
+  background-color: #ddd;
 }

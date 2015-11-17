@@ -1,0 +1,27 @@
+extends ../layout.jade
+
+block content
+  h1 Benfucius says
+  table
+    each quote in quotes
+      tr.quote
+        td.quote-text= quote.get('text')
+
+        td.vote.positive
+          form(method='POST' action="/quotes/#{quote.get('id')}/vote")
+            span= quote.get('positive_votes') || 0
+            input(type='hidden' name='value' value='+')
+            button Wise
+
+        td.vote.negative
+          form(method='POST' action="/quotes/#{quote.get('id')}/vote")
+            span= quote.get('negative_votes') || 0
+            input(type='hidden' name='value' value='-')
+            button Lies
+
+        td.vote.fail
+          form(method='POST' action="/quotes/#{quote.get('id')}/vote")
+            input(type='hidden' name='value' value='!')
+            button NOT A QUOTE
+
+  a(href='/quotes/new') Submit a new quote
