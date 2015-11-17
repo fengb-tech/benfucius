@@ -1,16 +1,16 @@
 mixin votes(quote)
   .vote.positive
-    +vote(quote, '+', 'Wise', quote.get('positive_votes') || 0)
+    +vote(quote, '+', 'Wise', 'positive_votes')
 
   .vote.negative
-    +vote(quote, '-', 'Lies', quote.get('negative_votes') || 0)
+    +vote(quote, '-', 'Lies', 'negative_votes')
 
   .vote.fail
     +vote(quote, '!', 'NOT A QUOTE')
 
-mixin vote(quote, value, text, votes)
-  form(method='POST' action="/quotes/#{quote.get('id')}/vote")
+mixin vote(quote, value, text, field)
+  form.vote-form(method='POST' action="/quotes/#{quote.get('id')}/vote")
     input(type='hidden' name='value' value=value)
-    if votes != null
-      span= votes
+    if field
+      span(data-quote-field=field)= quote.get(field) || 0
     button= text
