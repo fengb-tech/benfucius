@@ -5,7 +5,8 @@ block content
   table
     each quote in quotes
       tr.quote(data-quote-id=quote.get('id'))
-        td.quote-text(data-quote-field='text')= quote.get('text')
+        td.quote-text
+          a(href="/quotes/#{quote.get('id')}" data-quote-field='text')= quote.get('text')
         td
           +votes(quote)
 
