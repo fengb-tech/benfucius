@@ -4,6 +4,14 @@ html
     title Benfucius
     link(href='/app.css' type='text/css' media='screen' rel='stylesheet')
   body
-    block content
+    header.top-header
+      h1.top-logo
+        a(href='/') Benfucius say
+      nav.top-nav
+        a.top-nav-item(href='/quotes/random') Random
+        a.top-nav-item(href='/quotes/latest') Latest
+
+    main
+      block content
   script(src='//code.jquery.com/jquery-2.1.4.min.js')
   script(src='/app.js')

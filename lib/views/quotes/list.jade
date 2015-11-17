@@ -2,7 +2,6 @@ extends ../layout.jade
 include ./mixins
 
 block content
-  h1 Benfucius says
   table
     each quote in quotes
       tr.quote(data-quote-id=quote.get('id'))

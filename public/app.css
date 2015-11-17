@@ -1,5 +1,29 @@
 body {
   font-family: 'Helvetica Neue', Helvetica, 'Droid Sans', OpenSans, Arial, sans-serif;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+a {
+  color: inherit;
+}
+
+.top-header {
+  display: flex;
+  align-items: baseline;
+}
+
+.top-logo {
+  flex: 1 1 auto;
+}
+
+.top-nav {
+  flex: 0 0 auto;
+}
+
+.top-nav-item {
+  display: inline-block;
+  margin-left: 20px;
 }
 
 blockquote {
@@ -11,7 +35,7 @@ blockquote {
 }
 
 .quote-new {
-  display: inline-block;
+  display: block;
   margin-top: 30px;
 }
 

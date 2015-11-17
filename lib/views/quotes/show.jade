@@ -2,7 +2,6 @@ extends ../layout.jade
 include ./mixins
 
 block content
-  h1 Benfucius says
   div.quote(data-quote-id=quote.get('id'))
     blockquote.quote-text(data-quote-field='text')= quote.get('text')
     +votes(quote)
