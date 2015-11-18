@@ -66,3 +66,19 @@ blockquote {
 tr:nth-child(even) {
   background-color: #ddd;
 }
+
+.lightbox-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.lightbox {
+  width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+}
